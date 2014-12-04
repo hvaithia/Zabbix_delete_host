@@ -1,0 +1,52 @@
+Authenticate:
+
+curl -i -X POST -H 'Content-Type: application/json-rpc' -d '{"params": {"password": "zabbix", "user": "Admin"}, "jsonrpc": "2.0", "method": "user.authenticate","auth": "", "id": 0}' http://10.13.4.84/zabbix/api_jsonrpc.php
+HTTP/1.1 200 OK
+Date: Thu, 04 Dec 2014 22:02:51 GMT
+Server: Apache/2.2.15 (CentOS)
+X-Powered-By: PHP/5.3.3
+Content-Length: 68
+Connection: close
+Content-Type: application/json
+
+{"jsonrpc":"2.0","result":"b807ecb111ddd790c0fee6e4e22c4b26","id":0}
+
+Check hosts if exist:
+
+curl -i -X POST -H 'Content-Type: application/json-rpc' -d '{"params": {"host": "isilon2-1"ists","auth": "b807ecb111ddd790c0fee6e4e22c4b26", "id": 1}' http://10.13.4.84/zabbix/api_jsonrpc.php
+HTTP/1.1 200 OK
+Date: Thu, 04 Dec 2014 22:03:08 GMT
+Server: Apache/2.2.15 (CentOS)
+X-Powered-By: PHP/5.3.3
+Content-Length: 38
+Connection: close
+Content-Type: application/json
+
+{"jsonrpc":"2.0","result":true,"id":1}
+
+Get hostid from hostname:
+
+curl -i -X POST -H 'Content-Type: application/json-rpc' -d '{"params": {"output": "extend","filter":{"host": "isilon2-1"}}, "jsonrpc": "2.0", "method": "host.get","auth": "b807ecb111ddd790c0fee6e4e22c4b26", "id": 2}' http://10.13.4.84/zabbix/api_jsonrpc.php
+HTTP/1.1 200 OK
+Date: Thu, 04 Dec 2014 22:21:39 GMT
+Server: Apache/2.2.15 (CentOS)
+X-Powered-By: PHP/5.3.3
+Content-Length: 675
+Connection: close
+Content-Type: application/json
+
+{"jsonrpc":"2.0","result":[{"maintenances":[],"hostid":"10131","proxy_hostid":"0","host":"isilon2-1","status":"0","disable_until":"0","error":"","available":"0","errors_from":"0","lastaccess":"0","ipmi_authtype":"-1","ipmi_privilege":"2","ipmi_username":"","ipmi_password":"","ipmi_disable_until":"0","ipmi_available":"0","snmp_disable_until":"0","snmp_available":"1","maintenanceid":"0","maintenance_status":"0","maintenance_type":"0","maintenance_from":"0","ipmi_errors_from":"0","snmp_errors_from":"0","ipmi_error":"","snmp_error":"","jmx_disable_until":"0","jmx_available":"0","jmx_errors_from":"0","jmx_error":"","name":"isilon2-1","flags":"0","templateid":"0"}],"id":2}
+
+Delete host using the hostid:
+
+curl -i -X POST -H 'Content-Type: application/json-rpc' -d '{"params": ["10131"], "jsonrpc": "2.0", "method": "host.delete","auth": "b807ecb111ddd790c0fee6e4e22c4b26", "id": 3}' http://10.13.4.84/zabbix/api_jsonrpc.php
+HTTP/1.1 200 OK
+Date: Thu, 04 Dec 2014 22:27:46 GMT
+Server: Apache/2.2.15 (CentOS)
+X-Powered-By: PHP/5.3.3
+Content-Length: 55
+Connection: close
+Content-Type: application/json
+
+{"jsonrpc":"2.0","result":{"hostids":["10131"]},"id":3}
+
